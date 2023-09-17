@@ -4,10 +4,8 @@ export const setupDropDown = () => {
     const selectElement = document.getElementById("ddKommuner");
     const buttonElement = document.getElementById("pbFetchKommuner");
 
-    buttonElement.addEventListener("click", async() => {
-        const kommune = await fetchKommune(urlKommune, selectElement);
-        console.log("this is kommune:", kommune);
-    });
+    buttonElement.addEventListener("click",
+        async() => await fetchKommune(urlKommune, selectElement));
 }
 
 export const fetchKommune = async (url, selectElement) => {
@@ -21,12 +19,14 @@ export const fetchKommune = async (url, selectElement) => {
 
 
 const addKommuneNameForSelect = (data, selectToFill) => {
-    data.forEach((item) => {
+    data.forEach((item, index) => {
         if (item.hasOwnProperty("navn")) {
             const option = document.createElement("option");
             option.textContent = item.navn.toString();
+            option.value = index;
+            option.href = item.href;
+            console.log(option.href)
             selectToFill.appendChild(option);
         }
     });
 }
-
