@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Assignment handed by KEA",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest"
   },
@@ -10,6 +11,9 @@
     "testEnvironment": "jsdom",
     "transform": {
       "^.+\\.js$": "babel-jest"
+    },
+    "moduleNameMapper": {
+      "^node-fetch$": "node-fetch"
     }
   },
   "repository": {
@@ -36,7 +40,8 @@
     "axios": "^1.5.0",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3"
   },
   "dependencies": {
     "node-fetch": "^3.3.2"
