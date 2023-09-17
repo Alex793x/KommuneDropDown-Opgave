@@ -5,17 +5,28 @@ export const setupDropDown = () => {
     const buttonElement = document.getElementById("pbFetchKommuner");
 
     buttonElement.addEventListener("click", async() => {
-        const kommune = await fetchKommune(urlKommune);
+        const kommune = await fetchKommune(urlKommune, selectElement);
         console.log("this is kommune:", kommune);
     });
 }
 
-export const fetchKommune = async (url) => {
+export const fetchKommune = async (url, selectElement) => {
     const response = await fetch(url);
     if (!response.ok) {
-        console.log(response.json())
         throw new Error(`Fetch Error: ${response.statusText}`);
     }
-    return await response.json();
+    const data = await response.json(); // Await for the JSON data.
+    await addKommuneNameForSelect(data, selectElement);
+}
+
+
+const addKommuneNameForSelect = (data, selectToFill) => {
+    data.forEach((item) => {
+        if (item.hasOwnProperty("navn")) {
+            const option = document.createElement("option");
+            option.textContent = item.navn.toString();
+            selectToFill.appendChild(option);
+        }
+    });
 }
 
