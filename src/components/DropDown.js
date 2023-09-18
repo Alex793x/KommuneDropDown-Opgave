@@ -1,4 +1,5 @@
 export const urlKommune = "https://api.dataforsyningen.dk/kommuner";
+let usedKommuner = [];
 
 export const setupDropDown = () => {
     const selectElement = document.getElementById("ddKommuner");
@@ -35,13 +36,15 @@ const addKommuneNameForSelect = (data, selectToFill) => {
 }
 
 const addKommuneHref = (selectElement) => {
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const href = selectedOption.dataset.href; // Retrieve href from data attribute
-    if (href) {
+    const selectedIndex = selectElement.selectedIndex;
+    const selectedOption = selectElement.options[selectedIndex];
+    const href = selectedOption.dataset.href;
+    if (href && !usedKommuner.includes(selectedIndex)) {
+        usedKommuner.push(selectedIndex);
         const anchor = document.createElement("a");
         anchor.textContent = selectedOption.text.toString();
-        anchor.href = href; // Set the href for the anchor element
-        anchor.target = "_blank"; // Open the link in a new tab
+        anchor.href = href;
+        anchor.target = "_blank";
         const newLine = document.createElement("br");
         const appElement = document.getElementById("app");
         appElement.appendChild(newLine);
